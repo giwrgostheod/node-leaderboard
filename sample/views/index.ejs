@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>node-leaderboard sample.</title>
+    <title>ADVANCED DATABASES - CO572</title>
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
@@ -34,7 +34,7 @@
 
                 const _form = $(this);
                 $.ajax({
-                    url: '/insert',
+                    url: '/insertRandomPlayer',
                     type: 'POST',
                     data: _form.serialize(),
 
@@ -98,14 +98,14 @@
 <body>
     <div class="container">
         <div class="row">
-            <h2>node-leaderboard sample.</h2>
+            <h2>ADVANCED DATABASES - CO572</h2>
 
-            <div class="row" style="text-align: right">
+            <!--<div class="row" style="text-align: right">
                 <form id="insert">
                     <input type="text" name="num">
                     <button type="submit" class="btn btn-sm btn-primary">register users with random score.</button>
                 </form>
-            </div>
+            </div>-->
 
             <div class="row">
                 total registered: <%= total %><br>
@@ -137,21 +137,21 @@
                         <td><%=data.rank%></td>
                         <td><%=data.name%></td>
                         <td><%=data.score%></td>
-                        <td>
+                        <!--<td>
                             <a class="btn btn-primary btn-xs modifyScore" name="<%=data.name%>" delta="1" href="javascript:void(0);">++</a>
                             <a class="btn btn-primary btn-xs modifyScore" name="<%=data.name%>" delta="-1" href="javascript:void(0);">--</a>
                             <a class="btn btn-warning btn-xs remove" name="<%=data.name%>" href="javascript:void(0);">remove</a>
-                        </td>
+                        </td>-->
                     </tr>
                     <% }); %>
                 </table>
             </div>
 
-            <div align="right">
+            <!--<div align="right">
                 <form id="clear">
                     <button type="button" class="btn btn-sm btn-danger">clear all.</button>
                 </form>
-            </div>
+            </div>-->
         </div>
     </div>
 </body>

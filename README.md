@@ -43,6 +43,7 @@
 * getScoreAndRank(score)
 * getNeighbors(name, count)
 * getList(number, size)
+* setJson(name, json)
 
 * [For details, see here.](https://hirowaki.github.io/node-leaderboard/index.html)
 

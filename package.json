@@ -22,16 +22,16 @@
     "lured": "*"
   },
   "devDependencies": {
-    "mocha": "1.18.x",
-    "sinon": "*",
+    "body-parser": "^1.19.0",
+    "ejs": "~2.5.6",
     "eslint": "*",
+    "express": "^4.17.1",
+    "gh-pages": "*",
+    "ink-docstrap": "*",
     "istanbul": "*",
     "jsdoc": "*",
-    "ink-docstrap": "*",
-    "gh-pages": "*",
-    "express": "~4.15.3",
-    "ejs": "~2.5.6",
-    "body-parser": "~1.17.2"
+    "mocha": "1.18.x",
+    "sinon": "*"
   },
   "keywords": [
     "leaderboard"

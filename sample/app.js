@@ -5,6 +5,9 @@
 
 const express = require("express");
 const app = express();
+//const https = require('https');
+const http = require('http');
+//const fs = require('fs');
 const path = require("path");
 const ejs = require("ejs");
 const Promise = require('bluebird');
@@ -56,7 +59,7 @@ function startListening() {
     // start listening.
     return new Promise((resolve, reject) => {
         try {
-            const server = app.listen(8080, function () {
+            const server = http.createServer(app).listen(8080, function () {
                 /* eslint-disable no-console */
                 console.log("server is listening to PORT:" + server.address().port);
                 /* eslint-enable no-console */

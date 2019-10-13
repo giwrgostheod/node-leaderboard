@@ -9,21 +9,33 @@ const pageSize = 10;
 
 class LeaderboardService {
     static initialize(redis) {
-        return Leaderboard.create(redis, "lbTest")
+        return Leaderboard.create(redis, "lbData")
         .then((_lb) => {
             this._instance = _lb;
             this._nameSeed = 1;
 
-            return this._instance.clear()
-            .then(() => {
-                // At first, insert 10 * pageSize users to the board.
-                return this.insertRandom(pageSize * 10);
-            });
+            //return this._instance.clear()
+            //.then(() => {
+            //    // At first, insert 10 * pageSize users to the board.
+            //    return this.insertRandom(pageSize * 10);
+            //});
         });
     }
 
     static clear() {
         return this._instance.clear();
+    }
+
+    static insert(name, score) {
+        const promises = [];
+        promises.push(this._instance.setScore(name, score));
+        return Promise.all(promises);
+    }
+
+    static insertJson(name, json) {
+        const promises = [];
+        promises.push(this._instance.setJSON(name, json));
+        return Promise.all(promises);
     }
 
     static insertRandom(num) {

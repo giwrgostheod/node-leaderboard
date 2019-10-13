@@ -40,3 +40,5 @@ jspm_packages
 coverage
 doc/
 .node-version
+.vscode
+package-lock.json

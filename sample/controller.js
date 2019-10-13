@@ -4,11 +4,29 @@
 
 const LeaderboardService = require('./service');
 
+function censor(censor) {
+    var i = 0;
+  
+    return function(key, value) {
+      if(i !== 0 && typeof(censor) === 'object' && typeof(value) == 'object' && censor == value) 
+        return '[Circular]'; 
+  
+      if(i >= 29) // seems to be a harded maximum of 30 serialized objects?
+        return '[Unknown]';
+  
+      ++i; // so we know we aren't using the original object anymore
+  
+      return value;  
+    }
+  }
+
 class LeaderboardController {
     static register(app) {
         app.get('/', this.list);
         app.post("/clear", this.clear);
         app.post("/insert", this.insert);
+        app.post("/insertRandomPlayer", this.insertRandomPlayer);
+        app.post("/insertJson", this.insertJson);
         app.post("/modify", this.modify);
         app.post("/remove", this.remove);
     }
@@ -29,17 +47,42 @@ class LeaderboardController {
 
     static clear(req, res) {
         void(req);
+        void(res);
+        return;
+        /*return LeaderboardService.clear()
+        .then(() => {
+            res.json({});
+        });*/
+    }
 
-        return LeaderboardService.clear()
+    static insert(req, res) {
+        const name = req.body.name || "";
+        const score = +req.body.score || 1;
+
+        return LeaderboardService.insert(name, score)
         .then(() => {
             res.json({});
         });
     }
 
-    static insert(req, res) {
-        const num = +req.body.num || 1;
+    static insertRandomPlayer(req, res) {
+        void(req);
+        void(res);
+        console.log("inserting random players is disabled");
+        return;
+        /*const num = +req.body.num || 1;
 
         return LeaderboardService.insertRandom(num)
+        .then(() => {
+            res.json({});
+        });*/
+    }
+
+    static insertJson(req, res) {
+        const name = req.body.name || "";
+        const json = JSON.stringify(req.body, censor(req.body));
+        //console.log(json);
+        return LeaderboardService.insertJson(name, json)
         .then(() => {
             res.json({});
         });
@@ -58,7 +101,11 @@ class LeaderboardController {
     }
 
     static modify(req, res) {
-        const name = req.body.name || "";
+        void(req);
+        void(res);
+        console.log("modifying players' stats is disabled");
+        return;
+        /*const name = req.body.name || "";
         const delta = +req.body.delta || 1;
 
         return LeaderboardService.modifyScore(name, delta)
@@ -67,7 +114,7 @@ class LeaderboardController {
         })
         .catch(() => {
             res.status(400).send('maybe wrong request.');
-        });
+        });*/
     }
 }
 
