@@ -27,6 +27,7 @@ class LeaderboardService {
     }
 
     static insert(name, req) {
+        
         const promises = [];
         const score = +req.body.score || 1;
         const json = JSON.stringify(req.body);
