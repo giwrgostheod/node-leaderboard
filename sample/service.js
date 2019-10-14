@@ -3,7 +3,7 @@
 // Copyright (c) 2017 hirowaki https://github.com/hirowaki
 
 const Promise = require('bluebird');
-const Leaderboard = require('../index').LeaderboardScoreDesc;
+const Leaderboard = require('../index').LeaderboardScoreAsc;
 
 const pageSize = 10;
 
@@ -26,9 +26,13 @@ class LeaderboardService {
         return this._instance.clear();
     }
 
-    static insert(name, score) {
+    static insert(name, req) {
         const promises = [];
-        promises.push(this._instance.setScore(name, score));
+        const score = +req.body.score || 1;
+        const json = JSON.stringify(req.body);
+        const hName = this._instance.setName(name);
+        promises.push(this._instance.setScore(hName, score));
+        promises.push(this._instance.setJSON(hName, json));
         return Promise.all(promises);
     }
 
