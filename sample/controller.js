@@ -2,6 +2,7 @@
 
 // Copyright (c) 2017 hirowaki https://github.com/hirowaki
 
+const hashwords = require('hashwords');
 const LeaderboardService = require('./service');
 
 function censor(censor) {
@@ -25,6 +26,7 @@ class LeaderboardController {
         app.get('/', this.list);
         app.post("/clear", this.clear);
         app.post("/insert", this.insert);
+        app.post("/getMyName", this.getMyName);
         app.post("/insertRandomPlayer", this.insertRandomPlayer);
         app.post("/insertJson", this.insertJson);
         app.post("/modify", this.modify);
@@ -56,8 +58,8 @@ class LeaderboardController {
     }
 
     static insert(req, res) {
-        const name = req.body.name || "";
-        const score = +req.body.score || 1;
+        //const name = req.body.name || "";
+        //const score = +req.body.score || 1;
         
         // check for basic auth header
         if (!req.headers.authorization || req.headers.authorization.indexOf('Basic ') === -1) {
@@ -71,10 +73,28 @@ class LeaderboardController {
         if(/*username != "grt" ||*/ password != "duh")
             return res.status(401).json({ message: 'unauthorized' });
 
-        return LeaderboardService.insert(username, req)
-        .then(() => {
-            res.json({});
+        var hw = hashwords();
+        var hName = hw.hashStr(username);
+        console.log(hName);   
+        return LeaderboardService.insert(hName, req)
+        .then((reply) => {
+            console.log(reply.toString());
+            res.json({user: hName.toString()});
         });
+    }
+
+    static getMyName(req, res) {
+        if (!req.headers.authorization || req.headers.authorization.indexOf('Basic ') === -1) {
+            return res.status(401).json({ message: 'Missing Authorization Header' });
+        }
+
+        const base64Credentials =  req.headers.authorization.split(' ')[1];
+        const credentials = Buffer.from(base64Credentials, 'base64').toString('ascii');
+        const [username, ] = credentials.split(':');
+
+        var hw = hashwords();
+        var hName = hw.hashStr(username);
+        return res.json({user: hName.toString()});
     }
 
     static insertRandomPlayer(req, res) {

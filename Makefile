@@ -1,6 +1,6 @@
 install: #node_modules
 	rm -rf node_modules && npm install
-        npm install --save hashwords 
+        #npm install --save hashwords 
 
 server:
 	node ./sample/app.js

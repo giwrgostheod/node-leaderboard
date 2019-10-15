@@ -16,10 +16,11 @@
   },
   "author": "hirowaki https://github.com/hirowaki",
   "dependencies": {
-    "lodash": "^4.0.0",
     "bluebird": "*",
-    "redis": "~2.7.1",
-    "lured": "*"
+    "hashwords": "^1.0.0",
+    "lodash": "^4.0.0",
+    "lured": "*",
+    "redis": "~2.7.1"
   },
   "devDependencies": {
     "body-parser": "^1.19.0",
